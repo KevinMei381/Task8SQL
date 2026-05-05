@@ -11,7 +11,7 @@ def print_all():
         results = cursor.fetchall()
         # print nicely
         for ID in results:
-            print(f'{ID[0]} {ID[1]} {ID[2]} {ID[3]} {ID[4]}')
+            print(f'{ID[0]:<2} {ID[1]:<10} {ID[2]:<20} {ID[3]:<8} {ID[4]}')
 
 
 print_all()
