@@ -27,12 +27,14 @@ def print_all_desc():
             print(f'{ID[0]:<2} {ID[1]:<10} {ID[2]:<30} {ID[3]:<8} {ID[4]}')
 
 
-apple = input('1 or 2?')
+apple = input('1 or 2? ')
 try:
     int(apple)
     if apple == '1':
         print_all_desc()
     elif apple == '2':
         print_all()
+    else:
+        print('no')
 except ValueError:
     print('no')
