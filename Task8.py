@@ -5,36 +5,31 @@ DATABASE = 'Task8.db'
 
 def print_all():
     with sqlite3.connect(DATABASE) as db:
-        cursor = db.cursor()
-        sql = "SELECT * FROM Veges;"
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        # print nicely
-        print('')
-        for ID in results:
-            print(f'{ID[0]:<2} {ID[1]:<10} {ID[2]:<30} {ID[3]:<8} {ID[4]}')
+        control = db.cursor()
+        # Using triple quotes (""") makes it easy to paste multi-line SQL
+        sql = """
+        SELECT
+            veges.name,
+            veges.scientific_name,
+            veges.averagedays,
+            GROUP_CONCAT(months.month, ', ') AS planting_months
+        FROM veges
+        JOIN bridge ON veges.vege_id = bridge.vege_id
+        JOIN months ON bridge.month_id = months.month_id
+        GROUP BY veges.vege_id
+        ORDER BY veges.averagedays DESC;
+        """
+        control.execute(sql)
+        results = control.fetchall()
+        print(
+            f'\n{"Name":<12} '
+            f'{"Scientific Name":<40} '
+            f'{"Days to mature":<15} '
+            f'{"Ideal planting months"}'
+        )
+        print("-" * 95)
+        for row in results:
+            print(f'{row[0]:<12} {row[1]:<40} {row[2]:<15} {row[3]}')
 
 
-def print_all_desc():
-    with sqlite3.connect(DATABASE) as db:
-        cursor = db.cursor()
-        sql = "SELECT * FROM Veges ORDER BY AverageDays DESC;"
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        # print nicely
-        print('')
-        for ID in results:
-            print(f'{ID[0]:<2} {ID[1]:<10} {ID[2]:<30} {ID[3]:<8} {ID[4]}')
-
-
-apple = input('1 or 2? ')
-try:
-    int(apple)
-    if apple == '1':
-        print_all_desc()
-    elif apple == '2':
-        print_all()
-    else:
-        print('no')
-except ValueError:
-    print('no')
+print_all()
