@@ -101,10 +101,10 @@ def print_by_vege(vege_name):
             FROM veges
             JOIN bridge ON veges.vege_id = bridge.vege_id
             JOIN months ON bridge.month_id = months.month_id
-            WHERE months.month = ?
+            WHERE veges.name LIKE ?
             GROUP BY veges.vege_id;
         """
-        cursor.execute(sql, (vege_name,))
+        cursor.execute(sql, (f'%{vege_name}%',))
         results = cursor.fetchall()
         if results:
             print(
@@ -116,8 +116,8 @@ def print_by_vege(vege_name):
             print("-" * 95)
             for row in results:
                 print(f'{row[0]:<12} {row[2]:<15} {row[3]:<24} {row[1]:<40} ')
-            else:
-                print('Not found')
+        else:
+            print('    Not found')
 
 
 apple = input(
