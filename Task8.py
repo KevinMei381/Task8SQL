@@ -23,40 +23,42 @@ def print_all_days_desc():
         results = control.fetchall()
         print(
             f'\n{"Name":<12} '
-            f'{"Scientific Name":<40} '
             f'{"Days to mature":<15} '
-            f'{"Ideal planting months"}'
+            f'{"Ideal planting months":<46}'
+            f'{"Scientific Name"}'
         )
         print("-" * 95)
         for row in results:
-            print(f'{row[0]:<12} {row[1]:<40} {row[2]:<15} {row[3]}')
+            print(f'{row[0]:<12} {row[2]:<15} {row[3]:<45} {row[1]:<40} ')
 
 
 def print_by_month(month_name):
     with sqlite3.connect(DATABASE) as db:
         cursor = db.cursor()
         sql = """
-            SELECT veges.name, veges.averagedays, veges.scientific_name,
+            SELECT veges.name,
+            veges.scientific_name,
+            veges.averagedays,
                    GROUP_CONCAT(months.month, ', ')
             FROM veges
             JOIN bridge ON veges.vege_id = bridge.vege_id
             JOIN months ON bridge.month_id = months.month_id
-            WHERE months.month LIKE ?
+            WHERE months.month = ?
             GROUP BY veges.vege_id;
         """
-        cursor.execute(sql, (f'{month_name}%',))
+        cursor.execute(sql, (month_name,))
         results = cursor.fetchall()
 
         if results:
             print(
-                 f'\n{"Name":<12} '
-                 f'{"Scientific Name":<40} '
-                 f'{"Days to mature":<15} '
-                 f'{"Ideal planting months"}'
-             )
+                f'\n{"Name":<12} '
+                f'{"Days to mature":<15} '
+                f'{"Ideal planting months":<25}'
+                f'{"Scientific Name"}'
+            )
             print("-" * 95)
-        for row in results:
-            print(f'{row[0]:<12} {row[2]:<40} {row[1]:<15} {row[3]}')
+            for row in results:
+                print(f'{row[0]:<12} {row[2]:<15} {row[3]:<24} {row[1]:<40} ')
 
 
 def print_all_by_name():
@@ -76,33 +78,68 @@ def print_all_by_name():
         """
         control.execute(sql)
         results = control.fetchall()
-        print(
-            f'\n{"Name":<12} '
-            f'{"Scientific Name":<40} '
-            f'{"Days to mature":<15} '
-            f'{"Ideal planting months"}'
-        )
-        print("-" * 95)
-        for row in results:
-            print(f'{row[0]:<12} {row[1]:<40} {row[2]:<15} {row[3]}')
+        if results:
+            print(
+                f'\n{"Name":<12} '
+                f'{"Days to mature":<15} '
+                f'{"Ideal planting months":<45}'
+                f'{"Scientific Name"}'
+            )
+            print("-" * 95)
+            for row in results:
+                print(f'{row[0]:<12} {row[2]:<15} {row[3]:<45} {row[1]:<40} ')
+
+
+def print_by_vege(vege_name):
+    with sqlite3.connect(DATABASE) as db:
+        cursor = db.cursor()
+        sql = """
+            SELECT veges.name,
+            veges.scientific_name,
+            veges.averagedays,
+                   GROUP_CONCAT(months.month, ', ')
+            FROM veges
+            JOIN bridge ON veges.vege_id = bridge.vege_id
+            JOIN months ON bridge.month_id = months.month_id
+            WHERE months.month = ?
+            GROUP BY veges.vege_id;
+        """
+        cursor.execute(sql, (vege_name,))
+        results = cursor.fetchall()
+        if results:
+            print(
+                f'\n{"Name":<12} '
+                f'{"Days to mature":<15} '
+                f'{"Ideal planting months":<25}'
+                f'{"Scientific Name"}'
+            )
+            print("-" * 95)
+            for row in results:
+                print(f'{row[0]:<12} {row[2]:<15} {row[3]:<24} {row[1]:<40} ')
+            else:
+                print('Not found')
 
 
 apple = input(
     """How to print:
-    1: Print by maturity (desc)
+    1: Print by how long to mature
     2: Print by name order
-    ... OR type a month (e.g.May, Apr, Dec) to see what to plant:
+    ... OR type a month name
+    ... OR by vege name
     > """)
 
 try:
-    choice = int(apple)
+    notapple = int(apple)
 
-    if choice == 1:
+    if notapple == 1:
         print_all_days_desc()
-    elif choice == 2:
+    elif notapple == 2:
         print_all_by_name()
-    else:
-        print("Invalid number choice.")
-
 except ValueError:
-    print_by_month(apple)
+    clean_input = apple.strip().title()
+    months = ["January", "February", "March", "April", "May", "June",
+              "July", "August", "September", "October", "November", "December"]
+    if clean_input in months:
+        print_by_month(clean_input)
+    else:
+        print_by_vege(clean_input)
