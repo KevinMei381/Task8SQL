@@ -110,12 +110,12 @@ def print_by_vege(vege_name):
             print(
                 f'\n{"Name":<12} '
                 f'{"Days to mature":<15} '
-                f'{"Ideal planting months":<25}'
+                f'{"Ideal planting months":<31}'
                 f'{"Scientific Name"}'
             )
             print("-" * 95)
             for row in results:
-                print(f'{row[0]:<12} {row[2]:<15} {row[3]:<24} {row[1]:<40} ')
+                print(f'{row[0]:<12} {row[2]:<15} {row[3]:<30} {row[1]:<40} ')
         else:
             print('    Not found')
 
@@ -136,10 +136,10 @@ try:
     elif notapple == 2:
         print_all_by_name()
 except ValueError:
-    clean_input = apple.strip().title()
+    input = apple.strip().title()
     months = ["January", "February", "March", "April", "May", "June",
               "July", "August", "September", "October", "November", "December"]
-    if clean_input in months:
-        print_by_month(clean_input)
+    if input in months:
+        print_by_month(input)
     else:
-        print_by_vege(clean_input)
+        print_by_vege(input)
