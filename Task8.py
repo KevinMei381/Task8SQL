@@ -12,6 +12,8 @@ def print_all_days_desc():
             veges.name,
             veges.scientific_name,
             veges.averagedays,
+            veges.min_opt_temp,
+            veges.max_opt_temp,
             GROUP_CONCAT(months.month, ', ') AS planting_months
         FROM veges
         JOIN bridge ON veges.vege_id = bridge.vege_id
@@ -22,14 +24,22 @@ def print_all_days_desc():
         control.execute(sql)
         results = control.fetchall()
         print(
-            f'\n{"Name":<12} '
-            f'{"Days to mature":<15} '
-            f'{"Ideal planting months":<46}'
-            f'{"Scientific Name"}'
+            f'\n{"Name":<15} '
+            f'{"Days to mature":<18} '
+            f'{"Ideal planting months":<40} '
+            f'{"Optimal temp after gemination":<30} '
+            f'{"Scientific Name":<30}'
         )
-        print("-" * 95)
+        print("-" * 120)
         for row in results:
-            print(f'{row[0]:<12} {row[2]:<15} {row[3]:<45} {row[1]:<40} ')
+            temp_range = f"{row[3]} - {row[4]}°C"
+            print(
+                f'{row[0]:<15} '
+                f'{row[2]:<18} '
+                f'{row[5]:<50} '
+                f'{temp_range:<30} '
+                f'{row[1]:<30}'
+            )
 
 
 def print_by_month(month_name):
@@ -39,6 +49,8 @@ def print_by_month(month_name):
             SELECT veges.name,
             veges.scientific_name,
             veges.averagedays,
+            veges.min_opt_temp,
+            veges.max_opt_temp,
                    GROUP_CONCAT(months.month, ', ')
             FROM veges
             JOIN bridge ON veges.vege_id = bridge.vege_id
@@ -51,14 +63,22 @@ def print_by_month(month_name):
 
         if results:
             print(
-                f'\n{"Name":<12} '
-                f'{"Days to mature":<15} '
-                f'{"Ideal planting months":<25}'
-                f'{"Scientific Name"}'
+                f'\n{"Name":<15} '
+                f'{"Days to mature":<18} '
+                f'{"Ideal planting months":<40} '
+                f'{"Optimal temp after gemination":<30} '
+                f'{"Scientific Name":<30}'
             )
-            print("-" * 95)
+            print("-" * 130)
             for row in results:
-                print(f'{row[0]:<12} {row[2]:<15} {row[3]:<24} {row[1]:<40} ')
+                temp_range = f"{row[3]} - {row[4]}°C"
+                print(
+                    f'{row[0]:<15} '
+                    f'{row[2]:<18} '
+                    f'{row[5]:<40} '
+                    f'{temp_range:<30} '
+                    f'{row[1]:<30}'
+                )
 
 
 def print_all_by_name():
@@ -69,6 +89,8 @@ def print_all_by_name():
             veges.name,
             veges.scientific_name,
             veges.averagedays,
+            veges.min_opt_temp,
+            veges.max_opt_temp,
             GROUP_CONCAT(months.month, ', ') AS planting_months
         FROM veges
         JOIN bridge ON veges.vege_id = bridge.vege_id
@@ -80,14 +102,22 @@ def print_all_by_name():
         results = control.fetchall()
         if results:
             print(
-                f'\n{"Name":<12} '
-                f'{"Days to mature":<15} '
-                f'{"Ideal planting months":<45}'
-                f'{"Scientific Name"}'
+                f'\n{"Name":<15} '
+                f'{"Days to mature":<18} '
+                f'{"Ideal planting months":<40} '
+                f'{"Optimal temp after gemination":<30} '
+                f'{"Scientific Name":<30}'
             )
-            print("-" * 95)
-            for row in results:
-                print(f'{row[0]:<12} {row[2]:<15} {row[3]:<45} {row[1]:<40} ')
+        print("-" * 120)
+        for row in results:
+            temp_range = f"{row[3]} - {row[4]}°C"
+            print(
+                f'{row[0]:<15} '
+                f'{row[2]:<18} '
+                f'{row[5]:<50} '
+                f'{temp_range:<30} '
+                f'{row[1]:<30}'
+            )
 
 
 def print_by_vege(vege_name):
@@ -97,6 +127,8 @@ def print_by_vege(vege_name):
             SELECT veges.name,
             veges.scientific_name,
             veges.averagedays,
+            veges.min_opt_temp,
+            veges.max_opt_temp,
                    GROUP_CONCAT(months.month, ', ')
             FROM veges
             JOIN bridge ON veges.vege_id = bridge.vege_id
@@ -108,14 +140,22 @@ def print_by_vege(vege_name):
         results = cursor.fetchall()
         if results:
             print(
-                f'\n{"Name":<12} '
-                f'{"Days to mature":<15} '
-                f'{"Ideal planting months":<31}'
-                f'{"Scientific Name"}'
+                f'\n{"Name":<15} '
+                f'{"Days to mature":<18} '
+                f'{"Ideal planting months":<40} '
+                f'{"Optimal temp after gemination":<30} '
+                f'{"Scientific Name":<30}'
             )
-            print("-" * 95)
-            for row in results:
-                print(f'{row[0]:<12} {row[2]:<15} {row[3]:<30} {row[1]:<40} ')
+        print("-" * 120)
+        for row in results:
+            temp_range = f"{row[3]} - {row[4]}°C"
+            print(
+                f'{row[0]:<15} '
+                f'{row[2]:<18} '
+                f'{row[5]:<50} '
+                f'{temp_range:<30} '
+                f'{row[1]:<30}'
+            )
         else:
             print('    Not found')
 
