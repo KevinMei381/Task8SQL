@@ -27,16 +27,16 @@ def print_all_days_desc():
             f'\n{"Name":<15} '
             f'{"Days to mature":<18} '
             f'{"Ideal planting months":<40} '
-            f'{"Optimal temp after gemination":<30} '
+            f'{"Optimal temp after germination":<30} '
             f'{"Scientific Name":<30}'
         )
-        print("-" * 120)
+        print("-" * 140)
         for row in results:
             temp_range = f"{row[3]} - {row[4]}°C"
             print(
                 f'{row[0]:<15} '
                 f'{row[2]:<18} '
-                f'{row[5]:<50} '
+                f'{row[5]:<40} '
                 f'{temp_range:<30} '
                 f'{row[1]:<30}'
             )
@@ -66,10 +66,10 @@ def print_by_month(month_name):
                 f'\n{"Name":<15} '
                 f'{"Days to mature":<18} '
                 f'{"Ideal planting months":<40} '
-                f'{"Optimal temp after gemination":<30} '
+                f'{"Optimal temp after germination":<30} '
                 f'{"Scientific Name":<30}'
             )
-            print("-" * 130)
+            print("-" * 140)
             for row in results:
                 temp_range = f"{row[3]} - {row[4]}°C"
                 print(
@@ -105,10 +105,10 @@ def print_all_by_name():
                 f'\n{"Name":<15} '
                 f'{"Days to mature":<18} '
                 f'{"Ideal planting months":<40} '
-                f'{"Optimal temp after gemination":<30} '
+                f'{"Optimal temp after germination":<30} '
                 f'{"Scientific Name":<30}'
             )
-        print("-" * 120)
+        print("-" * 140)
         for row in results:
             temp_range = f"{row[3]} - {row[4]}°C"
             print(
@@ -143,19 +143,19 @@ def print_by_vege(vege_name):
                 f'\n{"Name":<15} '
                 f'{"Days to mature":<18} '
                 f'{"Ideal planting months":<40} '
-                f'{"Optimal temp after gemination":<30} '
+                f'{"Optimal temp after germination":<30} '
                 f'{"Scientific Name":<30}'
             )
-        print("-" * 120)
-        for row in results:
-            temp_range = f"{row[3]} - {row[4]}°C"
-            print(
-                f'{row[0]:<15} '
-                f'{row[2]:<18} '
-                f'{row[5]:<50} '
-                f'{temp_range:<30} '
-                f'{row[1]:<30}'
-            )
+            print("-" * 140)
+            for row in results:
+                temp_range = f"{row[3]} - {row[4]}°C"
+                print(
+                    f'{row[0]:<15} '
+                    f'{row[2]:<18} '
+                    f'{row[5]:<40} '
+                    f'{temp_range:<30} '
+                    f'{row[1]:<30}'
+                )
         else:
             print('    Not found')
 
@@ -166,20 +166,25 @@ apple = input(
     2: Print by name order
     ... OR type a month name
     ... OR by vege name
-    > """)
+    > """).strip()
+if not apple:
+    print('Not found')
+else:
+    try:
+        notapple = int(apple)
 
-try:
-    notapple = int(apple)
-
-    if notapple == 1:
-        print_all_days_desc()
-    elif notapple == 2:
-        print_all_by_name()
-except ValueError:
-    input = apple.strip().title()
-    months = ["January", "February", "March", "April", "May", "June",
-              "July", "August", "September", "October", "November", "December"]
-    if input in months:
-        print_by_month(input)
-    else:
-        print_by_vege(input)
+        if notapple == 1:
+            print_all_days_desc()
+        elif notapple == 2:
+            print_all_by_name()
+        else:
+            print('Invalid input')
+    except ValueError:
+        search = apple.strip().title()
+        months = ["January", "February", "March", "April", "May", "June",
+                  "July", "August", "September",
+                  "October", "November", "December"]
+        if search in months:
+            print_by_month(search)
+        else:
+            print_by_vege(search)
