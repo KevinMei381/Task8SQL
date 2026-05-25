@@ -36,8 +36,8 @@ def print_all_days_desc():
             print(
                 f'{row[0]:<15} '
                 f'{row[2]:<18} '
-                f'{row[5]:<40} '
-                f'{temp_range:<30} '
+                f'{row[5]:<50} '
+                f'{temp_range:<20} '
                 f'{row[1]:<30}'
             )
 
@@ -75,8 +75,8 @@ def print_by_month(month_name):
                 print(
                     f'{row[0]:<15} '
                     f'{row[2]:<18} '
-                    f'{row[5]:<40} '
-                    f'{temp_range:<30} '
+                    f'{row[5]:<50} '
+                    f'{temp_range:<20} '
                     f'{row[1]:<30}'
                 )
 
@@ -105,7 +105,7 @@ def print_all_by_name():
                 f'\n{"Name":<15} '
                 f'{"Days to mature":<18} '
                 f'{"Ideal planting months":<40} '
-                f'{"Optimal temp after germination":<40} '
+                f'{"Optimal temp after germination":<30} '
                 f'{"Scientific Name":<30}'
             )
         print("-" * 140)
@@ -114,8 +114,8 @@ def print_all_by_name():
             print(
                 f'{row[0]:<15} '
                 f'{row[2]:<18} '
-                f'{row[5]:<40} '
-                f'{temp_range:<400} '
+                f'{row[5]:<50} '
+                f'{temp_range:<20} '
                 f'{row[1]:<30}'
             )
 
@@ -142,8 +142,8 @@ def print_by_vege(vege_name):
             print(
                 f'\n{"Name":<15} '
                 f'{"Days to mature":<18} '
-                f'{"Ideal planting months":<40} '
-                f'{"Optimal temp after germination":<30} '
+                f'{"Ideal planting months":<50} '
+                f'{"Optimal temp after germination":<20} '
                 f'{"Scientific Name":<30}'
             )
             print("-" * 140)
@@ -162,13 +162,13 @@ def print_by_vege(vege_name):
 
 while True:
     apple = input(
-        """How to print:
-    1: Print by how long to mature
-    2: Print by name order
-    ... OR type a month name
-    ... OR by vege name
-    0: Exit
-    > """).strip()
+        """What to print:
+        1: Print by how long to mature
+        2: Print by name order
+        ... OR type a month name
+        ... OR by vege name
+        0: Exit
+        > """).strip()
     if not apple:
         print('Not found')
     else:
