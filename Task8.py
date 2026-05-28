@@ -65,8 +65,8 @@ def print_by_month(month_name):
             print(
                 f'\n{"Name":<15} '
                 f'{"Days to mature":<18} '
-                f'{"Ideal planting months":<40} '
-                f'{"Optimal temp after germination":<30} '
+                f'{"Ideal planting months":<22} '
+                f'{"Optimal temp after germination":<42} '
                 f'{"Scientific Name":<30}'
             )
             print("-" * 140)
@@ -75,8 +75,8 @@ def print_by_month(month_name):
                 print(
                     f'{row[0]:<15} '
                     f'{row[2]:<18} '
-                    f'{row[5]:<50} '
-                    f'{temp_range:<20} '
+                    f'{row[5]:<22} '
+                    f'{temp_range:<42} '
                     f'{row[1]:<30}'
                 )
 
