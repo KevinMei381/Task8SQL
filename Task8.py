@@ -169,7 +169,7 @@ while True:
         ... OR by vege name
         0: Exit
         > """).strip()
-    if not apple:
+    if not apple:   # this if not function test for nothing/false.
         print('Not found')
     else:
         try:
